@@ -1,0 +1,39 @@
+{% extends "main/auth_header.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="search-results">
+    {% if query %}
+        {% if results %}
+            <table class="table">
+                {% for result in results %}
+                    {% if result.can_be_watched %}
+                    <tr>
+                        <td>
+                            <a href="https://www.layuplist.com/search?q={{result.subject}}{{result.course_number}}">
+                                {{result.subject}} {{result.truncate_course_number}}: {{result.title}}
+                            </a>
+                        </td>
+                        <td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button
+                                    class="btn btn-secondary"
+                                    type="submit"
+                                    name="course_watch"
+                                    value={{result.pk}}
+                                ></button>
+                            </form>
+                        </td>
+                    </tr>                              
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No results found for {{query}}</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}

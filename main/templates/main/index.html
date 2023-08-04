@@ -1,0 +1,34 @@
+{% extends "main/auth_header.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="search-container">
+        <form action="" class="search-bar" role="search" method="POST">
+            {% csrf_token %}
+            <input
+                type="search"
+                placeholder="Search for courses"
+                name="search_query"
+                autocomplete="off"
+            >
+            <button type="submit"><img src="{% static 'main/images/search.png' %}" ></button>
+        </form>
+        
+        <div>
+            {% if watched_courses %}
+                <ul>
+                    {% for course in watched_courses %}
+                    <li>{{course.course}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
